@@ -2,7 +2,12 @@
 
 **Simple AI Analysis for Hevy**
 
+> [!NOTE]
+> This is a **vibe coded** project and is currently a **work in progress**.
+
 HevySpotter connects to your [Hevy](https://hevy.com/) account to analyze your recent workouts and generate new routines based on what you've likely neglected.
+
+![HevySpotter Screenshot](screenshot.png)
 
 ## Features
 
