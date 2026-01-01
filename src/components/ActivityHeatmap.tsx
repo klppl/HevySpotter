@@ -10,7 +10,7 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
     const [isMounted, setIsMounted] = React.useState(false);
 
     // Configuration constants
-    const COL_WIDTH = 20;
+    const COL_WIDTH = 24;
     const LEFT_OFFSET = 32;
 
     // Process data for the heatmap AND insights
@@ -146,10 +146,10 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
     const getLevelColor = (level: number) => {
         switch (level) {
             case 0: return "bg-muted/10 hover:bg-muted/20";
-            case 1: return "bg-primary/20 hover:bg-primary/30";
-            case 2: return "bg-primary/40 hover:bg-primary/50";
-            case 3: return "bg-primary/70 hover:bg-primary/80";
-            case 4: return "bg-primary shadow-[0_0_12px_rgba(45,226,230,0.8)] border border-primary/50";
+            case 1: return "bg-fuchsia-600/40 hover:bg-fuchsia-600/50"; // Deep Berry/Fuchsia (cleaner than muddy rose)
+            case 2: return "bg-violet-500/60 hover:bg-violet-500/70";   // Vibrant Violet
+            case 3: return "bg-sky-500/80 hover:bg-sky-500/90";         // Bright Blue/Sky
+            case 4: return "bg-cyan-400 hover:bg-cyan-300";             // Solid Cyan (No Glow)
             default: return "bg-muted/10 hover:bg-muted/20";
         }
     };
@@ -187,13 +187,13 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
                         <div className="flex gap-2">
                             {/* Day Labels */}
                             <div className="flex flex-col gap-1 text-[11px] text-muted-foreground pt-[0px] w-8 text-right pr-2 shrink-0">
-                                <span className="h-4 flex items-center justify-end">Mon</span>
-                                <span className="h-4 flex items-center justify-end">Tue</span>
-                                <span className="h-4 flex items-center justify-end">Wed</span>
-                                <span className="h-4 flex items-center justify-end">Thu</span>
-                                <span className="h-4 flex items-center justify-end">Fri</span>
-                                <span className="h-4 flex items-center justify-end">Sat</span>
-                                <span className="h-4 flex items-center justify-end">Sun</span>
+                                <span className="h-5 flex items-center justify-end">Mon</span>
+                                <span className="h-5 flex items-center justify-end">Tue</span>
+                                <span className="h-5 flex items-center justify-end">Wed</span>
+                                <span className="h-5 flex items-center justify-end">Thu</span>
+                                <span className="h-5 flex items-center justify-end">Fri</span>
+                                <span className="h-5 flex items-center justify-end">Sat</span>
+                                <span className="h-5 flex items-center justify-end">Sun</span>
                             </div>
 
                             {/* Grid */}
@@ -205,7 +205,7 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
                                                 <TooltipTrigger asChild>
                                                     <div
                                                         className={cn(
-                                                            "w-4 h-4 rounded-sm transition-all duration-300",
+                                                            "w-5 h-5 rounded-md transition-all duration-300",
                                                             getLevelColor(day.level)
                                                         )}
                                                     />
@@ -229,11 +229,11 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
                         <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground mt-3 px-2">
                             <span>Less</span>
                             <div className="flex gap-1">
-                                <div className="w-4 h-4 rounded-sm bg-muted/10" />
-                                <div className="w-4 h-4 rounded-sm bg-primary/20" />
-                                <div className="w-4 h-4 rounded-sm bg-primary/40" />
-                                <div className="w-4 h-4 rounded-sm bg-primary/70" />
-                                <div className="w-4 h-4 rounded-sm bg-primary shadow-[0_0_12px_rgba(45,226,230,0.8)] border border-primary/50" />
+                                <div className="w-5 h-5 rounded-md bg-muted/10" />
+                                <div className="w-5 h-5 rounded-md bg-fuchsia-600/40" />
+                                <div className="w-5 h-5 rounded-md bg-violet-500/60" />
+                                <div className="w-5 h-5 rounded-md bg-sky-500/80" />
+                                <div className="w-5 h-5 rounded-md bg-cyan-400" />
                             </div>
                             <span>More</span>
                         </div>

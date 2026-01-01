@@ -46,8 +46,8 @@ export function Dashboard() {
                 {/* Card 1: Activity Heatmap */}
                 <Card className="shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-all border-primary/10">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-primary">Activity (Last 12 Months)</CardTitle>
-                        <Activity className="h-4 w-4 text-primary" />
+                        <CardTitle className="text-lg font-bold text-primary">Activity (Last 12 Months)</CardTitle>
+                        <Activity className="h-5 w-5 text-primary" />
                     </CardHeader>
                     <CardContent>
                         <ActivityHeatmap workouts={safeWorkouts} />
@@ -57,15 +57,15 @@ export function Dashboard() {
                 {/* Card 2: Volume Progression */}
                 <Card className="shadow-lg transition-all">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Volume Trend (Last 12 Months)</CardTitle>
-                        <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                        <CardTitle className="text-lg font-bold text-primary">Volume Trend (Last 12 Months)</CardTitle>
+                        <TrendingUp className="h-5 w-5 text-primary" />
                     </CardHeader>
                     {/* 
             Absolute positioning fix for Recharts Warning:
             ResponsiveContainer needs a parent with strict dimensions. 
             CardContent has padding, so we make it relative and use absolute inset for the chart.
           */}
-                    <CardContent className="p-6 h-[300px]">
+                    <CardContent className="p-6 h-[400px]">
                         <VolumeChart workouts={safeWorkouts} className="h-full w-full" />
                     </CardContent>
                 </Card>
