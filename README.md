@@ -5,6 +5,8 @@
 > [!NOTE]
 > This is a **vibe coded** project and is currently a **work in progress**.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fklippel%2Fhevyspotter)
+
 HevySpotter connects to your [Hevy](https://hevy.com/) account to analyze your recent workouts and generate new routines based on what you've likely neglected.
 
 ![HevySpotter Screenshot](screenshot.png)
@@ -57,7 +59,5 @@ Click **Settings** in the top right to enter them.
 Since this is a vibe-coded project, here are some ideas for future improvements:
 
 *   [ ] **1RM Tracking:** Visual charts for estimated One Rep Max on compound lifts (Bench, Squat, Deadlift).
-*   [ ] **Equipment Filters:** AI context awareness for Home Gym vs. Commercial Gym.
-*   [ ] **PWA Support:** Make the app installable on mobile devices for easier gym access.
 *   [ ] **Social Sharing:** Generate clear, shareable images of workout stats.
 *   [ ] **Exercise History:** Drill-down views for specific exercise progression over time.
