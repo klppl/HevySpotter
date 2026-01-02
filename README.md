@@ -51,3 +51,13 @@ Click **Settings** in the top right to enter them.
 *   Next.js 15
 *   Tailwind CSS
 *   Recharts
+
+## Roadmap / TODO
+
+Since this is a vibe-coded project, here are some ideas for future improvements:
+
+*   [ ] **1RM Tracking:** Visual charts for estimated One Rep Max on compound lifts (Bench, Squat, Deadlift).
+*   [ ] **Equipment Filters:** AI context awareness for Home Gym vs. Commercial Gym.
+*   [ ] **PWA Support:** Make the app installable on mobile devices for easier gym access.
+*   [ ] **Social Sharing:** Generate clear, shareable images of workout stats.
+*   [ ] **Exercise History:** Drill-down views for specific exercise progression over time.
