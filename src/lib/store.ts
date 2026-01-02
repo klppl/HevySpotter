@@ -1,37 +1,37 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
-interface AppState {
+interface AppStore {
+    settingsOpen: boolean;
     hevyApiKey: string | null;
     openAiApiKey: string | null;
-    setHevyApiKey: (key: string) => void;
-    setOpenAiApiKey: (key: string) => void;
-    isSettingsOpen: boolean;
-    setSettingsOpen: (isOpen: boolean) => void;
-    trainingPhilosophy: string;
+    trainingPhilosophy: string | null;
+    selectedTemplateId: string;
+
+    setSettingsOpen: (open: boolean) => void;
+    setHevyApiKey: (key: string | null) => void;
+    setOpenAiApiKey: (key: string | null) => void;
     setTrainingPhilosophy: (text: string) => void;
+    setSelectedTemplateId: (id: string) => void;
 }
 
-export const useAppStore = create<AppState>()(
+export const useAppStore = create<AppStore>()(
     persist(
         (set) => ({
+            settingsOpen: false,
             hevyApiKey: null,
             openAiApiKey: null,
+            trainingPhilosophy: null,
+            selectedTemplateId: "drill-sergeant",
+
+            setSettingsOpen: (open) => set({ settingsOpen: open }),
             setHevyApiKey: (key) => set({ hevyApiKey: key }),
             setOpenAiApiKey: (key) => set({ openAiApiKey: key }),
-            isSettingsOpen: false,
-            setSettingsOpen: (isOpen) => set({ isSettingsOpen: isOpen }),
-            trainingPhilosophy: "",
             setTrainingPhilosophy: (text) => set({ trainingPhilosophy: text }),
+            setSelectedTemplateId: (id) => set({ selectedTemplateId: id }),
         }),
         {
             name: 'hevy-spotter-storage',
-            storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({
-                hevyApiKey: state.hevyApiKey,
-                openAiApiKey: state.openAiApiKey,
-                trainingPhilosophy: state.trainingPhilosophy
-            }),
         }
     )
 );

@@ -220,7 +220,7 @@ export function transformWorkouts(data: any): SimplifiedWorkout[] {
 }
 
 // OpenAI Client
-export async function analyzeWorkouts(apiKey: string, workouts: SimplifiedWorkout[], philosophy?: string): Promise<AnalysisResponse> {
+export async function analyzeWorkouts(apiKey: string, workouts: SimplifiedWorkout[], philosophy?: string, coachPrompt?: string): Promise<AnalysisResponse> {
     const prompt = `
     Analyze the following recent workout history (last ${workouts.length} sessions).
     
@@ -234,13 +234,13 @@ export async function analyzeWorkouts(apiKey: string, workouts: SimplifiedWorkou
     ` : ''}
 
     Your Goal:
-    Act as an elite, no-nonsense strength coach. Provide specific, actionable, and data-backed analysis.
+    Act as the specific coach described in the system prompt. Provide specific, actionable, and data-backed analysis.
     Avoid generic advice like "sleep more" or "eat protein" unless specifically relevant to a crash in performance.
     
     Output Format:
     Return strictly a JSON object with this schema:
     {
-      "summary": "A 1-2 sentence high-level summary of recent performance. Be direct.",
+      "summary": "A 1-2 sentence high-level summary of recent performance. Match the persona's tone.",
       "trends": ["List of 2-3 specific progressive overload observations. CITE DATA (e.g. 'Bench Press increased from 80kg to 85kg')."],
       "neglect": ["List of 2-3 muscle groups or movement patterns missing. BE SPECIFIC (e.g. 'No vertical pulling logic found')."],
       "recommendations": ["List of 2-3 actionable tips. INCLUDE EXAMPLES (e.g. 'Add Romanian Deadlifts 3x10 to address hamstring neglect')."]
@@ -251,13 +251,15 @@ export async function analyzeWorkouts(apiKey: string, workouts: SimplifiedWorkou
     2. EXAMPLES: If you recommend an exercise, give a suggested set/rep range (e.g. "3x12").
     3. DATA: When mentioning trends, quote the exact numbers from the history to prove you read it.
     4. CONTEXT: If the user is only doing upper body, assume they might be skipping legs, but don't hallucinate if the history is short.
-    5. PHILOSOPHY: If a philosophy is provided above, frame ALL recommendations within that style (e.g. if 'Powerlifting', suggest low reps; if 'Bodybuilding', suggest volume).
+    5. PHILOSOPHY: If a philosophy is provided above, frame ALL recommendations within that style.
     
     Do NOT include markdown formatting. Just the raw JSON string.
 
     Workouts:
     ${JSON.stringify(workouts.slice(0, 20), null, 2)} 
   `;
+
+    const systemPrompt = coachPrompt || 'You are HevySpotter, an elite AI strength coach. You only speak in JSON.';
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -268,7 +270,7 @@ export async function analyzeWorkouts(apiKey: string, workouts: SimplifiedWorkou
         body: JSON.stringify({
             model: 'gpt-4o-mini',
             messages: [
-                { role: 'system', content: 'You are HevySpotter, an elite AI strength coach. You only speak in JSON.' },
+                { role: 'system', content: systemPrompt + " You must return valid JSON." },
                 { role: 'user', content: prompt }
             ],
             response_format: { type: "json_object" },

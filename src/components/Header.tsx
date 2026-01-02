@@ -1,7 +1,8 @@
 "use client";
 
-import { Settings, RefreshCw } from "lucide-react";
+import { Settings, RefreshCw, HelpCircle, ShieldCheck, Github, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAppStore } from "@/lib/store";
 import { useWorkouts } from "@/hooks/useWorkouts";
 
@@ -35,6 +36,66 @@ export function Header() {
                     <Settings className="h-3 w-3" />
                     SETTINGS
                 </Button>
+                <div className="h-4 w-[1px] bg-border" />
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors"
+                        >
+                            <HelpCircle className="h-4 w-4" />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2 text-xl">
+                                <span className="text-primary font-bold">HevySpotter</span> Info
+                            </DialogTitle>
+                        </DialogHeader>
+                        <div className="flex flex-col gap-6 py-4">
+                            <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
+                                <h4 className="flex items-center gap-2 font-bold text-primary mb-2">
+                                    <ShieldCheck className="h-4 w-4" />
+                                    Privacy First
+                                </h4>
+                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                    Everything happens directly in your browser. Your Hevy data and API keys never leave your device. We don't store anything on our servers.
+                                </p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 text-sm text-foreground">
+                                    <div className="bg-secondary/10 p-2 rounded-md">
+                                        <Github className="h-4 w-4 text-secondary" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-semibold">Open Source</p>
+                                        <a
+                                            href="https://github.com/klppl/HevySpotter"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs text-muted-foreground hover:text-primary underline transition-colors"
+                                        >
+                                            github.com/klppl/HevySpotter
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 text-sm text-foreground">
+                                    <div className="bg-orange-500/10 p-2 rounded-md">
+                                        <Heart className="h-4 w-4 text-orange-500" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="font-semibold">Vibe Coded</p>
+                                        <p className="text-xs text-muted-foreground">
+                                            Built with passion to help you lift heavier.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </div>
         </header>
     );

@@ -145,12 +145,12 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
 
     const getLevelColor = (level: number) => {
         switch (level) {
-            case 0: return "bg-muted/10 hover:bg-muted/20";
-            case 1: return "bg-fuchsia-600/40 hover:bg-fuchsia-600/50"; // Deep Berry/Fuchsia (cleaner than muddy rose)
-            case 2: return "bg-violet-500/60 hover:bg-violet-500/70";   // Vibrant Violet
-            case 3: return "bg-sky-500/80 hover:bg-sky-500/90";         // Bright Blue/Sky
-            case 4: return "bg-cyan-400 hover:bg-cyan-300";             // Solid Cyan (No Glow)
-            default: return "bg-muted/10 hover:bg-muted/20";
+            case 0: return "bg-primary/5 border border-primary/10 hover:bg-primary/10";
+            case 1: return "bg-fuchsia-600/40 border border-transparent hover:bg-fuchsia-600/50";
+            case 2: return "bg-violet-500/60 border border-transparent hover:bg-violet-500/70";
+            case 3: return "bg-sky-500/80 border border-transparent hover:bg-sky-500/90";
+            case 4: return "bg-cyan-400 border border-transparent hover:bg-cyan-300 shadow-[0_0_8px_rgba(34,211,238,0.4)]";
+            default: return "bg-primary/5 border border-primary/10";
         }
     };
 
@@ -229,7 +229,7 @@ export function ActivityHeatmap({ workouts }: { workouts: SimplifiedWorkout[] })
                         <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground mt-3 px-2">
                             <span>Less</span>
                             <div className="flex gap-1">
-                                <div className="w-5 h-5 rounded-md bg-muted/10" />
+                                <div className="w-5 h-5 rounded-md bg-primary/5 border border-primary/10" />
                                 <div className="w-5 h-5 rounded-md bg-fuchsia-600/40" />
                                 <div className="w-5 h-5 rounded-md bg-violet-500/60" />
                                 <div className="w-5 h-5 rounded-md bg-sky-500/80" />

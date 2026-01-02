@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppStore } from "@/lib/store";
 import { analyzeWorkouts, SimplifiedWorkout, AnalysisResponse, getTopExerciseTemplates, generateAIWorkout, getRoutineFolders, createRoutineFolder, createRoutine } from "@/lib/api-client";
+import { COACH_TEMPLATES, DEFAULT_TEMPLATE } from "@/lib/coach-templates";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -19,10 +20,17 @@ export function AIAnalysisCard({ workouts }: { workouts: SimplifiedWorkout[] }) 
     const [isLoading, setIsLoading] = useState(false);
     const [isGeneratorLoading, setIsGeneratorLoading] = useState(false);
     const [sessionCount, setSessionCount] = useState(5);
+    const selectedTemplateId = useAppStore((state) => state.selectedTemplateId);
+    const setSelectedTemplateId = useAppStore((state) => state.setSelectedTemplateId);
+
     const [tempPhilosophy, setTempPhilosophy] = useState("");
+
+    // Derived state for current template (visual only now)
+    const [selectedTemplateIdLocal, setSelectedTemplateIdLocal] = useState<string>(selectedTemplateId);
 
     useEffect(() => {
         setIsMounted(true);
+        // Initialize with stored state if needed, or just keep manual
         setTempPhilosophy(trainingPhilosophy || "");
 
         const cached = localStorage.getItem("hevy_ai_analysis");
@@ -51,6 +59,8 @@ export function AIAnalysisCard({ workouts }: { workouts: SimplifiedWorkout[] }) 
         try {
             const targetWorkouts = workouts.slice(0, sessionCount);
 
+            // Pass the textarea content as the philosophy/context. 
+            // We do NOT pass a separate system prompt anymore, as the user edits the instruction directly in the text area.
             const result = await analyzeWorkouts(openAiApiKey, targetWorkouts, tempPhilosophy);
             setAnalysis(result);
             localStorage.setItem("hevy_ai_analysis", JSON.stringify(result));
@@ -149,6 +159,42 @@ export function AIAnalysisCard({ workouts }: { workouts: SimplifiedWorkout[] }) 
                     </div>
                 ) : (
                     <div className="h-full flex flex-col items-center justify-center p-2 gap-6 min-h-[300px]">
+
+                        {/* Coach Selector */}
+                        <div className="w-full space-y-2 text-left">
+                            <label className="text-xs text-muted-foreground uppercase tracking-wider font-semibold flex items-center gap-1">
+                                AI Coach Persona
+                            </label>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                {COACH_TEMPLATES.map((template) => (
+                                    <button
+                                        key={template.id}
+                                        onClick={() => {
+                                            setSelectedTemplateIdLocal(template.id);
+                                            setSelectedTemplateId(template.id);
+                                            setTempPhilosophy(template.systemPrompt);
+                                            toast.info(`Loaded "${template.name}" template.`);
+                                        }}
+                                        className={cn(
+                                            "flex flex-col items-start p-3 rounded-lg border transition-all text-left h-full",
+                                            selectedTemplateIdLocal === template.id
+                                                ? "bg-secondary/10 border-secondary ring-1 ring-secondary"
+                                                : "bg-background border-border hover:border-secondary/50 hover:bg-secondary/5"
+                                        )}
+                                    >
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="text-lg">{template.icon}</span>
+                                            <span className={cn("font-bold text-sm", selectedTemplateIdLocal === template.id ? "text-secondary" : "text-foreground")}>
+                                                {template.name}
+                                            </span>
+                                        </div>
+                                        <p className="text-[10px] text-muted-foreground leading-tight">
+                                            {template.description}
+                                        </p>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* Training Philosophy Input */}
                         <div className="w-full space-y-2 text-left">
