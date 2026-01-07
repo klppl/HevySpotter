@@ -10,16 +10,16 @@ import { Lock, Save } from "lucide-react";
 import { toast } from "sonner"; // Assuming sonner is installed or we use basic alert? I will use basic alert or need to install sonner. Better to just save silently or show "Saved" state.
 
 export function SettingsModal() {
-    const { hevyApiKey, openAiApiKey, setHevyApiKey, setOpenAiApiKey, isSettingsOpen, setSettingsOpen } = useAppStore();
+    const { hevyApiKey, openAiApiKey, setHevyApiKey, setOpenAiApiKey, settingsOpen, setSettingsOpen } = useAppStore();
     const [hevyKey, setHevyKey] = useState("");
     const [openaiKey, setOpenaiKey] = useState("");
 
     useEffect(() => {
-        if (isSettingsOpen) {
+        if (settingsOpen) {
             setHevyKey(hevyApiKey || "");
             setOpenaiKey(openAiApiKey || "");
         }
-    }, [isSettingsOpen, hevyApiKey, openAiApiKey]);
+    }, [settingsOpen, hevyApiKey, openAiApiKey]);
 
     const handleSave = () => {
         setHevyApiKey(hevyKey);
@@ -28,7 +28,7 @@ export function SettingsModal() {
     };
 
     return (
-        <Dialog open={isSettingsOpen} onOpenChange={setSettingsOpen}>
+        <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>API Configuration</DialogTitle>
